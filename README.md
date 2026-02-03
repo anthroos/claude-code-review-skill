@@ -4,7 +4,7 @@ Enterprise-grade AI-powered code review using Claude Code CLI — comprehensive 
 
 ## What is this?
 
-This is a **skill** for [Claude Code](https://claude.ai/claude-code) that enables automated, comprehensive code review with **240+ checks** across 10 categories:
+This is a **skill** for [Claude Code](https://claude.ai/claude-code) that enables automated, comprehensive code review with **280+ checks** across 15 categories:
 
 - **Security** — OWASP Top 10 + extended security checks
 - **Bugs & Logic** — Null handling, async issues, edge cases
@@ -16,17 +16,24 @@ This is a **skill** for [Claude Code](https://claude.ai/claude-code) that enable
 - **Documentation** — Missing or outdated docs
 - **DevOps** — Health checks, observability, resilience
 - **Git** — Version control best practices
+- **React/Next.js** — Hooks, effects, component patterns
+- **TypeScript** — Type safety, assertions, generics
+- **Python** — Type hints, context managers, patterns
+- **Node.js/Express** — Async handling, security middleware
+- **SQL/Database** — Queries, indexes, ORM patterns
 
 ## Why use this instead of CodeRabbit?
 
-| Feature | CodeRabbit | This Skill |
-|---------|-----------|------------|
-| Price | $15-30/user/month | Free (Claude API only) |
-| Checks | ~50 | **240+** |
-| Setup | SaaS integration | Copy one file |
-| Customization | Limited | Full control |
-| Privacy | Code goes to their servers | Runs locally |
-| Focus modes | Basic | Security, Performance, Bugs, Quality, Testing, a11y, i18n |
+| Feature | CodeRabbit | Anthropic Official | This Skill |
+|---------|-----------|---------------------|------------|
+| Price | $15-30/user/month | Free (API only) | Free (API only) |
+| Checks | ~50 | No fixed list | **280+** |
+| Approach | SaaS | 4 parallel agents | Checklist-based |
+| Focus | General | CLAUDE.md compliance | Security, Perf, Quality |
+| Confidence scoring | No | Yes (≥80) | Yes (≥70) |
+| Git blame analysis | No | Yes | Yes |
+| Language-specific | Limited | No | React, TS, Python, Node |
+| Privacy | Their servers | Local | Local |
 
 ## Installation
 
@@ -83,7 +90,7 @@ claude "check performance issues in PR 456"
 claude "review PR 123 and post comments"
 ```
 
-## What it checks (240+ rules)
+## What it checks (280+ rules)
 
 ### Security (63 checks)
 - **Injection** — SQL, NoSQL, Command, LDAP, XPath, Template, Header, Log injection
@@ -141,6 +148,28 @@ claude "review PR 123 and post comments"
 
 ### Git (7 checks)
 - Large files, secrets in history, merge conflicts, commit messages
+
+### React/Next.js (10 checks)
+- useEffect deps, cleanup, stale closures, key props, memo overuse
+
+### TypeScript (7 checks)
+- Any abuse, type assertions, missing return types, non-null assertions
+
+### Python (7 checks)
+- Mutable defaults, type hints, bare except, context managers
+
+### Node.js/Express (7 checks)
+- Async errors, helmet, rate limiting, input validation
+
+### SQL/Database (6 checks)
+- Raw queries, missing indexes, N+1 in ORM, migrations
+
+## Key Features
+
+- **Confidence scoring** — Only reports issues with ≥70% confidence, reducing noise
+- **Git blame analysis** — Skips pre-existing issues, focuses on new changes
+- **Auto-skip logic** — Ignores draft PRs, trivial changes, docs-only updates
+- **Language detection** — Applies React/TS/Python/Node checks when relevant
 
 ## Example Output
 

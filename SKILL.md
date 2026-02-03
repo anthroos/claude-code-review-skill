@@ -36,6 +36,19 @@ User can request specific focus: security, performance, bugs, style, etc.
 
 ## How to execute
 
+### Step 0: Check if review needed
+
+**Skip review if:**
+- PR is draft (`gh pr view --json isDraft`)
+- PR is already closed/merged
+- Only documentation changes (.md, .txt, LICENSE)
+- Only config changes (.json, .yaml, .toml) without code impact
+- Trivial changes (<5 lines, whitespace only, version bumps)
+
+**Inform user and ask to confirm if they still want review.**
+
+---
+
 ### Step 1: Determine mode
 
 Ask user or detect automatically:
@@ -74,11 +87,54 @@ git diff --name-only HEAD
 # Check tsconfig/eslint config for project standards
 ```
 
+### Step 3b: Filter pre-existing issues
+
+Before reporting an issue, check if it was introduced in this PR:
+
+```bash
+# Check when the problematic line was last modified
+git blame -L <start>,<end> <file> --porcelain | head -1
+```
+
+**Skip issues that:**
+- Existed before this PR (old blame hash)
+- Are in unchanged lines
+- Were introduced by a different author long ago
+
+**Only report issues introduced or modified in current changes.**
+
+This prevents noise from legacy code and focuses review on new changes.
+
+---
+
 ### Step 4: Comprehensive Analysis
 
 Apply ALL relevant checks from the checklist below.
 
-### Step 5: Output result
+### Step 5: Confidence Scoring
+
+**Rate each issue 0-100:**
+
+| Score | Confidence | When to use |
+|-------|------------|-------------|
+| 90-100 | Certain | Clear vulnerability (SQL injection with user input), obvious crash |
+| 70-89 | High | Likely bug, security risk, definite code smell |
+| 50-69 | Medium | Potential issue, needs context to confirm |
+| 25-49 | Low | Style preference, minor suggestion |
+| 0-24 | Skip | Probably false positive, pre-existing, or nitpick |
+
+**Only report issues with confidence ≥70.**
+
+**Mark as false positive and skip:**
+- Pre-existing issues (caught by Step 3b)
+- Issues that linters will catch (eslint, prettier)
+- Pedantic nitpicks without real impact
+- Code that looks wrong but has valid reason (check comments)
+- Issues with explicit ignore comments (`// eslint-disable`, `# noqa`)
+
+---
+
+### Step 6: Output result
 
 **Format:**
 ```markdown
@@ -477,6 +533,62 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments \
 - [ ] **Missing .gitignore entries** — Temporary files tracked
 - [ ] **Large commits** — Too many changes in one commit
 - [ ] **Unclear commit messages** — "fix", "update", "wip"
+
+---
+
+## LANGUAGE-SPECIFIC CHECKS (apply if relevant files detected)
+
+### 11. REACT / NEXT.JS (if .tsx, .jsx files)
+
+- [ ] **useEffect missing deps** — Dependencies array incomplete or missing
+- [ ] **useEffect cleanup** — Missing cleanup for subscriptions, timers
+- [ ] **useState stale closure** — Using state in callbacks without functional update
+- [ ] **Key prop issues** — Missing key, using index as key in dynamic lists
+- [ ] **useMemo/useCallback overuse** — Premature optimization
+- [ ] **Prop drilling** — Props passed through many levels (use context)
+- [ ] **Component too large** — >300 lines, should be split
+- [ ] **Inline function in JSX** — Creating new function on every render
+- [ ] **Direct DOM manipulation** — Using document.querySelector in React
+- [ ] **Missing error boundary** — No error handling for component tree
+
+### 12. TYPESCRIPT (if .ts, .tsx files)
+
+- [ ] **Any type abuse** — Using `any` to bypass type checking
+- [ ] **Type assertion abuse** — Unsafe `as` casts without validation
+- [ ] **Missing return types** — Public functions without explicit return type
+- [ ] **Implicit any** — Variables without type annotation
+- [ ] **Non-null assertion** — Overuse of `!` operator
+- [ ] **Enum vs union** — Using enum where union type is better
+- [ ] **Unused exports** — Exported types/functions never imported
+
+### 13. PYTHON (if .py files)
+
+- [ ] **Mutable default args** — `def foo(items=[])` anti-pattern
+- [ ] **Missing type hints** — Public functions without annotations
+- [ ] **Bare except** — `except:` without specific exception
+- [ ] **Context manager** — File/connection not using `with`
+- [ ] **Global state** — Modifying global variables
+- [ ] **Import side effects** — Code execution at import time
+- [ ] **f-string security** — User input in f-strings (potential injection)
+
+### 14. NODE.JS / EXPRESS (if package.json with express)
+
+- [ ] **Async error handling** — Missing try/catch in async routes
+- [ ] **Missing helmet** — No security headers middleware
+- [ ] **Missing rate limiting** — No protection against abuse
+- [ ] **Callback hell** — Nested callbacks instead of async/await
+- [ ] **Blocking event loop** — Sync operations in request handlers
+- [ ] **Missing input validation** — No validation middleware (joi, zod)
+- [ ] **Hardcoded CORS** — Wildcard or hardcoded origins
+
+### 15. SQL / DATABASE (if .sql files or ORM usage)
+
+- [ ] **Raw queries** — String concatenation instead of parameterized
+- [ ] **Missing indexes** — Queries on frequently filtered columns
+- [ ] **N+1 in ORM** — Lazy loading in loops
+- [ ] **Wide transactions** — Transaction scope too large
+- [ ] **Missing migrations** — Schema changes without migration files
+- [ ] **Cascading deletes** — Unintended data loss on delete
 
 ---
 
