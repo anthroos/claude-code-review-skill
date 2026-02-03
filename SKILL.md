@@ -105,8 +105,18 @@ Apply ALL relevant checks from the checklist below.
 
 **For GitHub PR — post comments:**
 ```bash
+# General comment on PR
 gh pr comment <PR_NUMBER> --body "## AI Code Review
 [Review content]"
+
+# Line-by-line comments via API (for specific file/line feedback)
+# Replace {owner}, {repo}, {pr} with actual values
+gh api repos/{owner}/{repo}/pulls/{pr}/comments \
+  --method POST \
+  -f body="Issue description and fix suggestion" \
+  -f path="src/file.ts" \
+  -f line=42 \
+  -f side="RIGHT"
 ```
 
 ---

@@ -4,7 +4,7 @@ Enterprise-grade AI-powered code review using Claude Code CLI — comprehensive 
 
 ## What is this?
 
-This is a **skill** for [Claude Code](https://claude.ai/claude-code) that enables automated, comprehensive code review with **150+ checks** across 10 categories:
+This is a **skill** for [Claude Code](https://claude.ai/claude-code) that enables automated, comprehensive code review with **240+ checks** across 10 categories:
 
 - **Security** — OWASP Top 10 + extended security checks
 - **Bugs & Logic** — Null handling, async issues, edge cases
@@ -22,7 +22,7 @@ This is a **skill** for [Claude Code](https://claude.ai/claude-code) that enable
 | Feature | CodeRabbit | This Skill |
 |---------|-----------|------------|
 | Price | $15-30/user/month | Free (Claude API only) |
-| Checks | ~50 | **150+** |
+| Checks | ~50 | **240+** |
 | Setup | SaaS integration | Copy one file |
 | Customization | Limited | Full control |
 | Privacy | Code goes to their servers | Runs locally |
@@ -83,9 +83,9 @@ claude "check performance issues in PR 456"
 claude "review PR 123 and post comments"
 ```
 
-## What it checks (150+ rules)
+## What it checks (240+ rules)
 
-### Security (45 checks)
+### Security (63 checks)
 - **Injection** — SQL, NoSQL, Command, LDAP, XPath, Template, Header, Log injection
 - **Authentication** — Brute-force, session fixation, weak tokens, MFA
 - **Data Exposure** — Hardcoded secrets, secrets in logs, weak crypto, HTTPS
@@ -97,7 +97,7 @@ claude "review PR 123 and post comments"
 - **Dependencies** — Outdated packages, typosquatting
 - **Additional** — SSRF, CSRF, JWT issues, ReDoS, file uploads, race conditions
 
-### Bugs & Logic (35 checks)
+### Bugs & Logic (50 checks)
 - **Null/Undefined** — Null dereference, missing checks, falsy confusion
 - **Type Issues** — Coercion, implicit conversion, unsafe casts
 - **Async** — Missing await, unhandled rejections, race conditions, deadlocks
@@ -108,21 +108,21 @@ claude "review PR 123 and post comments"
 - **Resources** — Leaks (memory, files, connections, timers)
 - **Business Logic** — Wrong calculations, missing validation, rollback
 
-### Performance (30 checks)
+### Performance (38 checks)
 - **Database** — N+1, missing indexes, SELECT *, pagination, pooling
 - **API/Network** — Caching, over/under-fetching, compression, timeouts
 - **Frontend** — Bundle size, re-renders, images, lazy loading
 - **Algorithms** — O(n²), memoization, data structures
 - **Caching** — Cache layer, invalidation, stampede
 
-### Code Quality (25 checks)
+### Code Quality (36 checks)
 - **Readability** — Naming, magic numbers, long functions, nesting
 - **Maintainability** — DRY, coupling, abstractions, dead code
 - **SOLID** — All 5 principles
 - **API Design** — Consistency, HTTP methods, status codes, versioning
 - **Configuration** — Hardcoded config, missing defaults, secrets
 
-### Testing (15 checks)
+### Testing (16 checks)
 - **Coverage** — Unit, integration, edge cases, error cases
 - **Quality** — Flaky tests, speed, interdependence, assertions
 - **Patterns** — Organization, naming, AAA, fixtures
@@ -179,16 +179,28 @@ Add to `.git/hooks/pre-push`:
 
 ```bash
 #!/bin/bash
-echo "Running AI code review..."
-claude "quick review, only critical issues" --print
+set -e
 
-if [ $? -ne 0 ]; then
-  echo "Review found critical issues. Push anyway? (y/n)"
-  read answer
-  if [ "$answer" != "y" ]; then
+echo "Running AI code review..."
+
+# Run review and capture output
+REVIEW_OUTPUT=$(claude "quick review of staged changes, list only critical issues as bullet points" --print 2>&1) || true
+
+# Check if critical issues were found
+if echo "$REVIEW_OUTPUT" | grep -qi "critical\|security\|injection\|vulnerability"; then
+  echo ""
+  echo "⚠️  Potential critical issues found:"
+  echo "$REVIEW_OUTPUT"
+  echo ""
+  read -p "Push anyway? (y/n) " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "Push cancelled."
     exit 1
   fi
 fi
+
+echo "✓ Review passed"
 ```
 
 ## CI/CD Integration
