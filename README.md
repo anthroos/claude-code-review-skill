@@ -4,7 +4,7 @@ Enterprise-grade AI-powered code review using Claude Code CLI — comprehensive 
 
 ## What is this?
 
-This is a **skill** for [Claude Code](https://claude.ai/claude-code) that enables automated, comprehensive code review with **280+ checks** across 15 categories:
+This is a **skill** for [Claude Code](https://claude.ai/download) that enables automated, comprehensive code review with **280+ checks** across 15 categories:
 
 - **Security** — OWASP Top 10 + extended security checks
 - **Bugs & Logic** — Null handling, async issues, edge cases
@@ -55,7 +55,7 @@ curl -o ~/.claude/skills/code-review/SKILL.md \
 
 ## Prerequisites
 
-1. **Claude Code CLI** — [Install here](https://claude.ai/claude-code)
+1. **Claude Code CLI** — [Install here](https://claude.ai/download)
 2. **GitHub CLI** (for PR reviews) — `brew install gh && gh auth login`
 
 ## Usage
