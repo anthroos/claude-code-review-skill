@@ -506,6 +506,8 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments \
 - [ ] **Missing JSDoc/TSDoc** — Public APIs undocumented
 - [ ] **Missing changelog** — No record of changes
 - [ ] **Missing setup instructions** — Hard to get started
+- [ ] **Broken links** — Dead URLs in README, docs, or code comments
+- [ ] **Relative link errors** — Wrong paths to internal docs/files
 
 ---
 
