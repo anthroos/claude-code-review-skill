@@ -12,16 +12,15 @@ Thanks for your interest in contributing! This project is part of the [Claude Co
 
 ## What We're Looking For
 
-- Bug fixes
-- New validation checks
+- New review checks/rules
+- Language-specific check improvements
+- False positive reduction
 - Documentation improvements
-- Integration guides for new channels
-- Schema improvements
-- Sample data improvements
+- Bug fixes
 
 ## Code Style
 
-- Python: follow PEP 8
+- Markdown: clear headings, consistent formatting
 - Use descriptive variable names
 - Keep functions focused and small
 - Add comments only where the logic isn't self-evident
