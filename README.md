@@ -350,10 +350,9 @@ Part of the Claude Code tools suite:
 
 | Repo | Purpose |
 |------|---------|
-| [cursor-crm](https://github.com/anthroos/cursor-crm) | AI-native CRM in your IDE |
+| [plaintext-crm](https://github.com/anthroos/plaintext-crm) | AI-native CRM in your IDE |
 | **claude-code-review-skill** (this) | AI code review (280+ checks) |
-| [claude-code-multichannel-outreach](https://github.com/anthroos/claude-code-multichannel-outreach) | Multi-channel messaging automation |
-| [cursor-pm](https://github.com/anthroos/cursor-pm) | AI-native project management |
+| [plaintext-pm](https://github.com/anthroos/plaintext-pm) | AI-native project management |
 
 ## Credits
 
