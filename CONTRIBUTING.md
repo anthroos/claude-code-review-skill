@@ -20,10 +20,16 @@ Thanks for your interest in contributing! This project is part of the [Claude Co
 
 ## Code Style
 
-- Markdown: clear headings, consistent formatting
-- Use descriptive variable names
-- Keep functions focused and small
-- Add comments only where the logic isn't self-evident
+This repo is primarily Markdown. Please follow these guidelines:
+
+- Use consistent heading levels (`#`, `##`, `###`) — do not skip levels
+- Use ATX-style headings (e.g., `## Heading`) — not underline style
+- Use fenced code blocks with language hints (e.g., ` ```bash `)
+- Keep lines under 120 characters where practical
+- Use `-` for unordered lists (not `*`)
+- Use `**bold**` for check names and `—` (em-dash) before descriptions
+- One blank line before and after headings, code blocks, and horizontal rules
+- Checklist items follow the pattern: `- [ ] **Name** — Description`
 
 ## Reporting Issues
 

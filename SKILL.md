@@ -1,3 +1,8 @@
+---
+name: code-review
+description: AI code review for PR or local changes. 280+ checks across security, architecture, performance, testing, and code quality. Posts findings as GitHub PR comments with confidence scores.
+---
+
 # Code Review
 
 > Comprehensive AI-powered code review for PRs and local changes — enterprise-grade alternative to CodeRabbit
@@ -231,7 +236,6 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments \
 - [ ] **Unnecessary features enabled** — Unused endpoints, methods
 - [ ] **Missing security headers** — No CSP, X-Frame-Options, etc.
 - [ ] **Directory listing enabled** — Exposed file structure
-- [ ] **Outdated dependencies** — Known vulnerabilities in packages
 - [ ] **Permissive file permissions** — World-readable sensitive files
 
 #### 1.7 Cross-Site Scripting (XSS)

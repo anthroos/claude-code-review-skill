@@ -264,8 +264,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Install Claude Code
         run: npm install -g @anthropic-ai/claude-code
+      - name: Install Review Skill
+        run: |
+          mkdir -p .claude/skills/code-review
+          curl -o .claude/skills/code-review/SKILL.md \
+            https://raw.githubusercontent.com/anthroos/claude-code-review-skill/main/SKILL.md
       - name: Run Review
         run: claude "review this PR, post comment with findings" --print
         env:
@@ -351,7 +358,7 @@ Part of the Claude Code tools suite:
 | Repo | Purpose |
 |------|---------|
 | [plaintext-crm](https://github.com/anthroos/plaintext-crm) | AI-native CRM in your IDE |
-| **claude-code-review-skill** (this) | AI code review (280+ checks) |
+| [claude-code-review-skill](https://github.com/anthroos/claude-code-review-skill) (this) | AI code review (280+ checks) |
 | [plaintext-pm](https://github.com/anthroos/plaintext-pm) | AI-native project management |
 
 ## Credits
