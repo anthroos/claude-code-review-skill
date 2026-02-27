@@ -172,7 +172,8 @@ gh api repos/{owner}/{repo}/pulls/{pr}/comments \
   -f body="Issue description and fix suggestion" \
   -f path="src/file.ts" \
   -f line=42 \
-  -f side="RIGHT"
+  -f side="RIGHT" \
+  -f commit_id="$(git rev-parse HEAD)"
 ```
 
 ---
