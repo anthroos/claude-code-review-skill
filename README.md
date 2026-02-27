@@ -1,10 +1,28 @@
 # Claude Code Review Skill
 
-Enterprise-grade AI-powered code review using Claude Code CLI — comprehensive open-source alternative to CodeRabbit.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/anthroos/claude-code-review-skill)](https://github.com/anthroos/claude-code-review-skill/stargazers)
+[![Works with Claude Code](https://img.shields.io/badge/Works%20with-Claude%20Code-blueviolet)](https://docs.anthropic.com/en/docs/claude-code/overview)
+
+**280+ automated code review checks. Free. Local. Privacy-first.** Open-source alternative to CodeRabbit.
+
+```
+$ claude "review PR 42"
+
+## Code Review: PR #42 — Add user authentication
+
+Critical (2): SQL injection in auth.ts:45, weak crypto in crypto.ts:12
+High (3): IDOR in user.ts:78, N+1 query in data.ts:23, XSS in Form.tsx:156
+Medium (5): DRY violations, missing error handling...
+
+Risk Level: HIGH — 2 critical issues must be fixed before merge.
+```
+
+---
 
 ## What is this?
 
-This is a **skill** for [Claude Code](https://claude.com/download) that enables automated, comprehensive code review with **280+ checks** across 15 categories:
+A **skill** for [Claude Code](https://claude.com/download) that enables automated, comprehensive code review with **280+ checks** across 15 categories:
 
 - **Security** — OWASP Top 10 + extended security checks
 - **Bugs & Logic** — Null handling, async issues, edge cases
@@ -278,8 +296,19 @@ MIT — use freely, modify as needed.
 
 ## Contributing
 
-PRs welcome! Add new checks, improve detection patterns, or add language-specific rules.
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Add new checks, improve detection patterns, or add language-specific rules.
+
+## Ecosystem
+
+Part of the Claude Code tools suite:
+
+| Repo | Purpose |
+|------|---------|
+| [cursor-crm](https://github.com/anthroos/cursor-crm) | AI-native CRM in your IDE |
+| **claude-code-review-skill** (this) | AI code review (280+ checks) |
+| [claude-code-multichannel-outreach](https://github.com/anthroos/claude-code-multichannel-outreach) | Multi-channel messaging automation |
+| [cursor-pm](https://github.com/anthroos/cursor-pm) | AI-native project management |
 
 ## Credits
 
-Built for the Claude Code community.
+Built by [@anthroos](https://github.com/anthroos) at [WeLabelData](https://welabeldata.com) for the Claude Code community.
